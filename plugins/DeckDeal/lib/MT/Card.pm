@@ -6,11 +6,11 @@ use base qw( MT::Object );
 __PACKAGE__->install_properties ({
     column_defs => {
         'id'          => 'integer not null auto_increment',
-        'cardtype_id' => 'integer not null',
-        'name'    => 'string(255) not null',
+        'cardtype_id' => 'integer',
+        'name'    => 'string(255)',
         'label'    => 'string(255)',
         'type'    => 'string(255)',
-        'value'   => 'integer'.
+        'value'   => 'integer',
         'option'  => 'boolean',
     },
     indexes => {

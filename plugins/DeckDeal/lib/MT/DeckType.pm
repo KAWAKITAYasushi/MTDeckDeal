@@ -6,10 +6,10 @@ use base qw( MT::Object );
 __PACKAGE__->install_properties ({
     column_defs => {
         'id'          => 'integer not null auto_increment',
-        'name'        => 'string(255) not null',
-        'cardtype_id' => 'integer not null',
-        'count'       => 'integer not null'.
-        'setcount'    => 'integer not null'.
+        'name'        => 'string(255)',
+        'cardtype_id' => 'integer',
+        'count'       => 'integer',
+        'setcount'    => 'integer',
         'must'        => 'text',
         'nouse'       => 'text',
     },
@@ -19,7 +19,7 @@ __PACKAGE__->install_properties ({
         modified_on => 1,
     },
     audit => 1,
-    datasource  => 'decktype',
+    datasource  => 'deck_type',
     primary_key => 'id',
-    class_type  => 'decktype',
+    class_type  => 'deck_type',
 });
