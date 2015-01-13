@@ -12,7 +12,7 @@ sub init {
 
   my $cardTypeData = {
     name => 'Game Card TRUMP',
-    count => 54,
+    quantity => 54,
     detail => $detail,
   };
   
@@ -40,22 +40,20 @@ sub init {
 
   my $cardtype = $ctClass->get_by_key({ name => $$cardTypeData{name} });
   #$cardtype->name($$cardTypeData{name});
-  $cardtype->count($$cardTypeData{count});
+  $cardtype->quantity($$cardTypeData{quantity});
   $cardtype->detail($$cardTypeData{detail});
   $cardtype->save() or die $cardtype->errstr();
 
   my $typeId = $cardtype->id();
-  my $cardCount = $cardtype->count();
+  my $cardCount = $$cardTypeData{quantity};
   $class_name = 'card';
   my $class = MT->model($class_name);
-  return if $class->count({ cardtype_id => $typeId }) == $cardCount;
 
   foreach my $suit (@$types) {
     for (my $value = 1; $value < 14; ++$value) {
-      my $card = $class->new();
       my $label = $labels->{$value} || $value;
+      my $card = $class->get_by_key({ name => $suit . ' ' . $label });
       $card->cardtype_id($typeId);
-      $card->name($suit . ' ' . $label);
       $card->label($label);
       $card->type($suit);
       $card->value($value);
@@ -66,9 +64,8 @@ sub init {
 
   my @jokerIds;
   foreach my $extra (@$extraCards) {
-    my $card = $class->new();
+    my $card = $class->get_by_key({ name => $$extra[0] });
     $card->cardtype_id($typeId);
-    $card->name($$extra[0]);
     $card->label($$extra[1]);
     $card->type($$extra[2]);
     $card->value($$extra[3]);
@@ -80,35 +77,30 @@ sub init {
   # サンプルデッキ
   $class_name = 'deck_type';
   my $dtClass = MT->model($class_name);
-  return if $dtClass->count({ cardtype_id => $typeId });
-  my $deck = $dtClass->new();
   # トランプ全カード
-  $deck->name('all cards');
+  my $deck = $dtClass->get_by_key({ name => 'all cards' });
   $deck->cardtype_id($typeId);
-  $deck->count($cardCount);
+  $deck->quantity($cardCount);
   $deck->setcount(1);
   $deck->save() or die $deck->errstr();
   # ジョーカー１枚
-  $deck = $dtClass->new();
-  $deck->name('one joker');  
+  $deck = $dtClass->get_by_key({ name => 'one joker' });
   $deck->cardtype_id($typeId);
-  $deck->count($cardCount - 1);
+  $deck->quantity($cardCount - 1);
   $deck->nouse($jokerIds[0]);
   $deck->setcount(1);
   $deck->save() or die $deck->errstr();
   # ジョーカーなし
-  $deck = $dtClass->new();
-  $deck->name('no joker');  
+  $deck = $dtClass->get_by_key({ name => 'no joker' });
   $deck->cardtype_id($typeId);
-  $deck->count($cardCount - 2);
+  $deck->quantity($cardCount - 2);
   $deck->nouse(join ',', @jokerIds);
   $deck->setcount(1);
   $deck->save() or die $deck->errstr();
   # ドローポーカー手札
-  $deck = $dtClass->new();
-  $deck->name('draw poker');  
+  $deck = $dtClass->get_by_key({ name => 'draw poker' });
   $deck->cardtype_id($typeId);
-  $deck->count(5);
+  $deck->quantity(5);
   $deck->setcount(1);
   $deck->save() or die $deck->errstr();
 };

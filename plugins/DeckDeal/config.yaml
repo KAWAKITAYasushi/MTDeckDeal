@@ -6,15 +6,20 @@ description: <__trans phrase="_PLUGIN_DESCRIPTION">
 author_name: <__trans phrase="_PLUGIN_AUTHOR">
 l10n_class: DeckDeal::L10N
 
-schema_version: 0.04
+schema_version: 0.09
 object_types:
-    cardtype: MT::CardType
+    card_type: MT::CardType
     card: MT::Card
-    decktype: MT::DeckType
-    deckdata: MT::DeckData
-    decksession: MT::DeckSession
+    deck_type: MT::DeckType
+    deck_data: MT::DeckData
+    deck_session: MT::DeckSession
 
 upgrade_functions:
     carddeck:
-        version_limit: 0.04
+        version_limit: 0.09
         code: $DeckDeal::DeckDeal::GameCard::Trump::init
+tags:
+    block:
+        Decks: $DeckDeal::DeckDeal::Tags::hdlr_decks
+    function:
+        Card: $DeckDeal::DeckDeal::Tags::hdlr_card

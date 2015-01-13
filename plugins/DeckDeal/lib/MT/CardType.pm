@@ -7,7 +7,7 @@ __PACKAGE__->install_properties ({
     column_defs => {
         'id'      => 'integer not null auto_increment',
         'name'    => 'string(255)',
-        'count'   => 'integer',
+        'quantity'   => 'integer',
         'detail'  => 'text',
     },
     audit => 1,

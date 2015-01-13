@@ -8,7 +8,7 @@ __PACKAGE__->install_properties ({
         'id'          => 'integer not null auto_increment',
         'name'        => 'string(255)',
         'cardtype_id' => 'integer',
-        'count'       => 'integer',
+        'quantity'    => 'integer',
         'setcount'    => 'integer',
         'must'        => 'text',
         'nouse'       => 'text',
