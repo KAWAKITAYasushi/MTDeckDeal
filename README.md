@@ -1,4 +1,9 @@
 # MTDeckDeal
+
+## 注意とお詫び
+諸事情により現在、動作確認が取れていないコードもアップしております。
+申し訳ありません。
+
 Movabletype plugin. Create Randam Deck(and Deal from deck)
 
 1.要件
